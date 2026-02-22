@@ -7,6 +7,7 @@ import Mainlayout from './Layout/Mainlayout.jsx';
 import Home from './Page/Home.jsx';
 import Categories from './Page/Categories.jsx';
 import Dashboard from './Page/Dashboard.jsx';
+import ViewDetails from './Extra-Component/ViewDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         path:'categories',
         element:<Categories></Categories>
        } ,
+       {
+        path:'viewDetails/:id',
+        element:<ViewDetails></ViewDetails>
+       },
        {
         path:'dashboard',
         element:<Dashboard></Dashboard>

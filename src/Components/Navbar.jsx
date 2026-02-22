@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo.jpg'
+import { NavLink } from 'react-router';
 const Navbar = () => { 
     return (
         <div>
@@ -27,9 +28,10 @@ const Navbar = () => {
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><a>Item 1</a></li>
-       <li> <a> Item 3</a></li>
-      <li><a>Item 3</a></li>
+      <li> <NavLink to="/" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Home</NavLink> </li>
+       <li> <NavLink to="/categories" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Categories</NavLink> </li>
+       <li> <NavLink to="/dashboard" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Dashboard</NavLink> </li>
+     
     </ul>
   </div>
   <div className="navbar-end">

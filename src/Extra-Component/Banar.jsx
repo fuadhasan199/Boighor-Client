@@ -1,4 +1,6 @@
 import React from 'react';
+import { GrLinkNext } from 'react-icons/gr';
+import { Link } from 'react-router';
 
 const Banar = () => {
     return (
@@ -17,7 +19,7 @@ const Banar = () => {
       <p className="mb-5">
        Boighor: Your Cozy Corner for Bangla Literature, from Classics to Bestsellers.
       </p>
-      <button className="btn btn-primary">Explore Now </button>
+       <Link to={'/categories'} className='btn btn-primary p-2 '> Explore More <GrLinkNext className='mt-1 '  /> </Link>
     </div>
   </div>
 </div>
