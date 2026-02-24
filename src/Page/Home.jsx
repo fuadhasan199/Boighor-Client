@@ -21,7 +21,7 @@ const Home = () => {
       <h1 className='text-3xl font-bold text-gray-800 text-center mb-2'>নতুন আসা বইসমূহ</h1> 
       <p className='text-lg text-blue-600 font-medium text-center mb-8'>বইয়ের দুনিয়ায় নতুন কী আসলো? এক পলকে দেখে নিন আমাদের লেটেস্ট কালেকশন।</p> 
 
-         <div className=" mt-5 mb-5 ml-5 text-xl font-bold">বইয়ের সংখ্যা  ঃ ৬ টি</div>
+         <div className=" mt-5 mb-5 ml-5 text-xl font-bold">নতুন আসা বই : ৬ টি</div>
      <div className="grid grid-cols-1 p-2 gap-5 md:grid-cols-3"> 
 
       {books.slice(3,9).map((book) => (
