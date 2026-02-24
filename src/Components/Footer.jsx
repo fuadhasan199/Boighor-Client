@@ -12,7 +12,10 @@ const Footer = () => {
       বইয়ের আলোয় আলোকিত ঘর <p className='text-2xl italic'>Boighor </p>
       <br />
       যেখানে বইয়ের গল্প ২০০৯ সাল থেকে জাগে
-    </p>
+    </p> 
+
+    <span className='font-bold'> Email: support@boighor.com</span> 
+     <span className='font-bold'> Mobile/WhatsApp: 01787749095</span> 
     <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
   </aside>
   <nav>
@@ -51,7 +54,8 @@ const Footer = () => {
         </svg>
       </a>
     </div>
-  </nav>
+  </nav> 
+  
 </footer>
         </div>
     ); 

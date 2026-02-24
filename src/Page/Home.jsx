@@ -102,7 +102,46 @@ const Home = () => {
             <h1 className='font-bold text-3xl text-center divider'> Customer review</h1> 
 
              <Swip></Swip>
-        </div> 
+        </div>  
+
+          {/* How to buy */} 
+
+
+        <div className="mt-20 bg-slate-50 dark:bg-slate-800 p-10 rounded-2xl">
+    <h2 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-white">কিভাবে বই অর্ডার করবেন?</h2>
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="text-center">
+            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">১</div>
+            <h3 className="font-bold mb-2 text-base-200">বই পছন্দ করুন</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">আমাদের  সংগ্রহ থেকে আপনার পছন্দের বইটি বেছে নিন।</p>
+        </div>
+        <div className="text-center">
+            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">২</div>
+            <h3 className="font-bold mb-2 text-base-200">বিস্তারিত দেখুন</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">"View Details" বাটনে ক্লিক করে বইটির সারসংক্ষেপ ও দাম দেখে নিন।</p>
+        </div>
+        <div className="text-center">
+            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">৩</div>
+            <h3 className="font-bold mb-2  text-base-200">অর্ডার করুন</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">ডান পাশে নিচে থাকা "Buy Now" বাটনে ক্লিক করে আপনার তথ্য দিন।</p>
+        </div>
+        <div className="text-center">
+            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">৪</div>
+            <h3 className="font-bold mb-2 text-base-200">বই বুঝে নিন</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">খুব দ্রুততম সময়ে আমরা আপনার ঠিকানায় বই পৌঁছে দেব।</p>
+        </div>
+    </div>
+</div> 
+
+
+<div className="mt-20 bg-blue-600 rounded-2xl p-8 text-center text-white">
+    <h2 className="text-2xl font-bold mb-4">কোন সমস্যা হলে জানান</h2>
+    <p className="mb-6">আপনার সমস্যার বিস্তারিত নিচের বক্সে লিখুন</p>
+    <div className="flex max-w-md mx-auto gap-2">
+        <input type="text" placeholder="আপনার সমস্যা..." className="input input-bordered w-full text-gray-800" />
+        <button className="btn btn-neutral">পাঠান</button>
+    </div>
+</div>
       
     
 

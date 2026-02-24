@@ -57,7 +57,7 @@ const ViewDetails = () => {
    <div className="mt-4 card-dash">
 
         <p className='text-xl text-red-500 line-through '>দাম : {books.price} টাকা</p> 
-         <p className='text-2xl font-bold mt-2 text-green-600'>ডিস্কাউন্ট : {books.discountPrice} টাকা
+         <p className='text-2xl font-bold mt-2 text-green-600'>ডিস্কাউন্ট মূল্য : {books.discountPrice} টাকা
         </p> 
         <p className='text-xl font-semibold mt-2 text-blue-500'>স্টক : {books.stock} টি
 
