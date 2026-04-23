@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
 
 const Categories = () => {
     const [books, setBooks] = useState([]);
@@ -83,10 +84,14 @@ const Categories = () => {
                                         </div>
 
                                         <p className='text-xs mt-2 line-clamp-2'>{book.shortDescription}</p>
-                                        
-                                        <div className="card-actions justify-end mt-4">
-                                            <button className="btn btn-sm btn-outline btn-success w-full">View Details</button>
-                                        </div>
+                                        <Link to={`/viewDetails/${book._id}`}>
+                                        <div className="card-actions justify-end mt-4"> 
+                                             
+                                             <button className="btn btn-sm btn-outline btn-success w-full">View Details</button>
+                                           
+                                           
+                                        </div> 
+                                         </Link>
                                     </div>
                                 </div>
                             ))
