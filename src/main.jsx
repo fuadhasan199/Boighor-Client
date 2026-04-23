@@ -8,6 +8,8 @@ import Home from './Page/Home.jsx';
 import Categories from './Page/Categories.jsx';
 import Dashboard from './Page/Dashboard.jsx';
 import ViewDetails from './Extra-Component/ViewDetails.jsx';
+import SignUp from './Sign/SignUp.jsx';
+import SignIn from './Sign/SignIn.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
        {
         path:'viewDetails/:id',
         element:<ViewDetails></ViewDetails>
+       },
+       {
+        path:'SignUp',
+        element:<SignUp></SignUp>
+       },
+       {
+        path:'SignIn',
+        element:<SignIn></SignIn>
        },
        {
         path:'dashboard',

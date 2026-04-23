@@ -40,7 +40,7 @@ const Categories = () => {
     };
 
     return (
-        <div className='container mx-auto p-4 rounded-md bg-base-100'>
+        <div className='container mx-auto p-4 rounded-md bg-base-100 mb-12'>
             <h1 className='text-3xl font-bold text-center mb-5 mt-5'>আমাদের সকল বইয়ের সংগ্রহ</h1>
             <p className='text-center mb-10 text-gray-600'>আপনার পছন্দের লেখকের বই খুঁজে নিন সহজেই।</p>
 
@@ -73,7 +73,7 @@ const Categories = () => {
           key={book._id}
           className="group bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-800 flex flex-col h-full"
         >
-          {/* Image & Category Tag */}
+         
           <div className="relative overflow-hidden rounded-t-2xl bg-slate-100 dark:bg-slate-800">
             <img
               src={book.image}
@@ -87,7 +87,7 @@ const Categories = () => {
             </div>
           </div>
 
-          {/* Content */}
+         
           <div className="p-5 flex flex-col flex-grow">
             <h3 className="text-lg font-bold text-slate-800 dark:text-white line-clamp-1 mb-1">
               {book.title}
@@ -96,7 +96,7 @@ const Categories = () => {
               {book.author}
             </p>
 
-            {/* Price */}
+           
             <div className="flex items-center gap-3 mb-6">
               <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                 ৳{book.discountPrice}
@@ -108,7 +108,7 @@ const Categories = () => {
               )}
             </div>
 
-            {/* Buttons */}
+           
             <div className="flex flex-col gap-2 mt-auto">
               <button
                 disabled={book.stock === 0}
