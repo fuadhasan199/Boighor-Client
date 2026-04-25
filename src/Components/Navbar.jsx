@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.jpg'
 import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 const Navbar = () => { 
     return (
         <div>
@@ -13,15 +14,14 @@ const Navbar = () => {
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
+        <li> 
+          <NavLink to="/" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Home</NavLink>
+           </li>
+        <li> 
+        <NavLink to="/categories" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Categories</NavLink> 
+        
         </li>
-        <li><a>Item 3</a></li>
+        <li><NavLink to="/dashboard" className={({isActive})=>isActive ? "text-green-700 font-bold":""}> Dashboard</NavLink> </li>
       </ul>
     </div>
     <img src={logo} alt="" className='w-20 rounded-2xl h-17'  />
@@ -35,7 +35,7 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Button</a>
+    <Link to='/SignIn'> <button className={"btn btn-primary px-2 rounded-md"}> LogIn </button> </Link>
   </div>
 </div>
         </div>
