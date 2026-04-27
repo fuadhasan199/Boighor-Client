@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from '../Provider/AuthProvider';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const SignIn = () => { 
-
+const {SignIn,signInWithGoogle}=useContext(AuthContext) 
+const navigate=useNavigate()
 const {
     register,
     handleSubmit,
@@ -12,8 +16,40 @@ const {
     formState: { errors },
   } = useForm() 
   
-   const onSubmit=data=>{
-     console.log(data) 
+   const onSubmit=async(data)=>{
+        try{
+           await SignIn(data.email,data.password) 
+           reset()
+           Swal.fire('Success',"Login Successful","Success") 
+           navigate("/")
+        }  
+         
+        catch(error){
+            Swal.fire('Error',error.message,"error")
+        }
+   } 
+
+   const handleGoogleSignIn=async()=>{
+      try{
+         const result=await signInWithGoogle() 
+         const user=result.user 
+          const userInfo={
+             name:user.displayName,
+             email:user.email,
+             mobile:user.phoneNumber,
+             role:'user'
+          } 
+          const response=await axios.post(`http://localhost:3000/user`,userInfo) 
+          Swal.fire({
+                icon: 'success',
+                title: 'Google Login Successful!',
+                
+            });  
+            navigate('/')
+      } 
+      catch(error){
+        Swal.fire('Error',error.message,"error")
+      }
    }
 
  
@@ -47,7 +83,7 @@ const {
           </button>
         </form>
 
-        <button
+        <button  onClick={handleGoogleSignIn}
           type="button"
           className="w-full mt-4 font-semibold border p-3 rounded-lg hover:bg-gray-100 transition"
         >

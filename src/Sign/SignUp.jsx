@@ -1,9 +1,18 @@
-import React from 'react';
+import { createUserWithEmailAndPassword,  updateProfile } from 'firebase/auth';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link,  useNavigate } from 'react-router';
+import { auth } from '../firebase/firebase.config';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../Provider/AuthProvider';
 
-const SignUp = () => { 
+const SignUp = () => {  
+  const {signInWithGoogle}=useContext(AuthContext) 
+ 
+
+  const navigate=useNavigate()
 
 const {
     register,
@@ -12,9 +21,75 @@ const {
     formState: { errors },
   } = useForm() 
 
-  const onSubmit=data=>{
-      console.log(data)
-  }
+  const onSubmit=async(data)=>{ 
+      
+    try{ 
+
+         const result=await createUserWithEmailAndPassword(auth,data.email,data.password) 
+
+          await updateProfile(auth.currentUser,{displayName:data.name}) 
+
+
+          const userInfo={
+              name:data.name,
+              email:data.email,
+              mobile:data.mobile,
+              role:data.userType
+          } 
+
+          const response=await axios.post(`http://localhost:3000/user`,userInfo) 
+
+          if(response.data.insertedId){
+              reset() 
+              Swal.fire({
+                  icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Your Account Created Successfully',
+              }) 
+              navigate('/')
+               
+          } 
+       
+    } 
+    catch(error){ 
+      Swal.fire({
+            icon: 'error',
+                title: 'Registration Failed',
+                text:error.message,
+      })
+    } 
+   
+
+
+      
+  } 
+
+       const handleGoogleSignIn=async()=>{
+       
+       try{
+           const result=await signInWithGoogle()
+           const user=result.user  
+
+           const userInfo={
+              name:user.displayName,
+              email:user.email,
+              mobile:user.phoneNumber,
+              role:'user'
+           } 
+           const response=await axios.post(`http://localhost:3000/user`,userInfo)
+           if(response.data.insertedId){
+             Swal.fire('Success', 'Registration Successful via Google', 'success')
+             navigate('/')
+           } 
+       } 
+       catch(error){
+        Swal.fire('Error',error.message,"error")
+       }
+
+
+
+
+     }
 
     return (
            <div className="min-h-screen flex items-center justify-center `bg-gradient-to-r from-green-100 to-emerald-200">
@@ -65,8 +140,8 @@ const {
           </button>
         </form>
 
-        <button
-          type="button"
+        <button onClick={handleGoogleSignIn}
+          type="button" 
           className="w-full mt-4 border p-4 font-semibold rounded-lg hover:bg-gray-100 transition"
         >
            <FcGoogle className='inline-block  text-2xl' /> Sign up with Google
