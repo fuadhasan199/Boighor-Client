@@ -11,6 +11,8 @@ import ViewDetails from './Extra-Component/ViewDetails.jsx';
 import SignUp from './Sign/SignUp.jsx';
 import SignIn from './Sign/SignIn.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
+import Private from './Provider/Private.jsx';
+import CartProvider from './Provider/CartProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,8 @@ const router = createBrowserRouter([
        } ,
        {
         path:'viewDetails/:id',
-        element:<ViewDetails></ViewDetails>
+        element: <Private> <ViewDetails></ViewDetails> </Private>
+       
        },
        {
         path:'SignUp',
@@ -40,7 +43,7 @@ const router = createBrowserRouter([
        },
        {
         path:'dashboard',
-        element:<Dashboard></Dashboard>
+        element:<Private>  <Dashboard></Dashboard>  </Private>
        }
     
     ]
@@ -48,10 +51,14 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode> 
-    <AuthProvider>
+  <StrictMode>  
+    <CartProvider> 
+ <AuthProvider>
        <RouterProvider router={router}> </RouterProvider>
-    </AuthProvider>
+    </AuthProvider> 
+
+    </CartProvider>
+   
    
   </StrictMode>,
 )

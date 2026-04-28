@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { AuthContext } from './AuthProvider';
-import { useNavigate } from 'react-router';
+import { Navigate } from 'react-router';
 
 const Private = ({children}) => { 
     const {user,loading}=useContext(AuthContext) 
-    const navigate=useNavigate() 
+    // const navigate=useNavigate() 
 
   if(loading){
       return <span className="loading loading-spinner loading-lg"></span>
@@ -12,7 +12,7 @@ const Private = ({children}) => {
   if(user){
     return children
   } 
-    return navigate('/SignIn')
+    return <Navigate to={'/SignIn'} replace></Navigate>
 
 
    

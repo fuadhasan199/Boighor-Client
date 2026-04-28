@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../assets/logo.jpg'
 import { NavLink } from 'react-router';
 import { Link } from 'react-router';
+import { AuthContext } from '../Provider/AuthProvider';
 const Navbar = () => { 
+  const {user,LogOut}=useContext(AuthContext) 
     return (
         <div>
             <div className="container mx-auto p-2 rounded-xl navbar bg-base-300 shadow-sm">
@@ -34,8 +36,20 @@ const Navbar = () => {
      
     </ul>
   </div>
-  <div className="navbar-end">
-    <Link to='/SignIn'> <button className={"btn btn-primary px-2 rounded-md"}> LogIn </button> </Link>
+  <div className="navbar-end gap-12">
+    
+    <div> 
+
+
+      
+
+    </div>
+
+
+
+
+
+    {user ?( <button onClick={LogOut} className='btn btn-primary p-2 rounded-xl mt-2'>LogOut</button> ): <Link to={'/SignIn'} className='btn btn-primary p-2 rounded-xl mt-2'>Log-In</Link> }
   </div>
 </div>
         </div>

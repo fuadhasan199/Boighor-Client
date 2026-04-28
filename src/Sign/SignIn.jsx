@@ -8,7 +8,8 @@ import axios from 'axios';
 
 const SignIn = () => { 
 const {SignIn,signInWithGoogle}=useContext(AuthContext) 
-const navigate=useNavigate()
+const navigate=useNavigate() 
+
 const {
     register,
     handleSubmit,
@@ -58,8 +59,8 @@ const {
         <div className="min-h-screen flex items-center justify-center `bg-gradient-to-r from-blue-100 to-indigo-200">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
         
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Welcome Back
+        <h2 className="text-xl font-bold text-center mb-6 text-gray-800">
+           Welcome back! Please log in to continue
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> 
