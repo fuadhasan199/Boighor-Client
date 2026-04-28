@@ -1,153 +1,126 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Banar from '../Extra-Component/Banar';
 import Swip from '../Extra-Component/Swip';
 import axios from 'axios';
 import { GrLinkNext } from 'react-icons/gr';
 import { Link } from 'react-router';
+import { CartContext } from '../Provider/CartProvider';
+import { AuthContext } from '../Provider/AuthProvider';
 
-const Home = () => {  
-    const [books,setBooks]=useState([])
-    useEffect(()=>{
-   axios.get(`http://localhost:3000/books`)
-   .then(res=>setBooks(res.data))
-    },[])
+const Home = () => {
 
-    return (
-        <div className='container mx-auto p-2 rounded-md bg-base-100 mb-12'> 
-        
-        <Banar></Banar> 
-     <div className="mt-10"> 
-    
-      <h1 className='text-3xl font-bold text-gray-800 text-center mb-2'>নতুন আসা বইসমূহ</h1> 
-      <p className='text-lg text-blue-600 font-medium text-center mb-8'>বইয়ের দুনিয়ায় নতুন কী আসলো? এক পলকে দেখে নিন আমাদের লেটেস্ট কালেকশন।</p> 
+  const { cart, addToCart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
 
-         <div className=" mt-5 mb-5 ml-5 text-xl font-bold">নতুন আসা বই : ৬ টি</div>
-     <div className="grid grid-cols-1 p-2 gap-5 md:grid-cols-3"> 
+  const [books, setBooks] = useState([]);
 
-      {books.slice(3,9).map((book) => (
-    <div 
-      key={book.id} 
-      className="group bg-white dark:bg-slate-900 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-800 flex flex-col h-full"
-    >
-    
-      <div className="relative overflow-hidden rounded-t-2xl bg-slate-100 dark:bg-slate-800">
-        <img 
-          src={book.image} 
-          alt={book.title} 
-          className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-       
-        <div className="absolute top-3 left-3">
-          <span className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm text-slate-800 dark:text-slate-200 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-wider">
-            {book.category}
-          </span>
-        </div>
-      </div>
+  useEffect(() => {
+    axios.get('http://localhost:3000/books')
+      .then(res => setBooks(res.data));
+  }, []);
 
-     
-      <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-lg font-bold text-slate-800 dark:text-white line-clamp-1 mb-1">
-          {book.title}
-        </h3>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-          {book.author}
-        </p>
+  return (
+    <div className='container mx-auto p-2 rounded-md bg-base-100 mb-12'>
 
-      
-        <div className="flex items-center gap-3 mb-6">
-          <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-            ৳{book.discountPrice}
-          </span>
-          {book.discountPrice < book.price && (
-            <span className="text-sm text-red-500 line-through decoration-red-600 font-medium">
-              ৳{book.price}
-            </span>
-          )}
-        </div>
+      <Banar />
 
-       
-        <div className="flex flex-col gap-2 mt-auto">
-          <button 
-            disabled={book.stock === 0}
-            className="w-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold py-2.5 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            {book.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
-          </button>
-          
-          <Link to={`viewDetails/${book._id}`}> 
-                 <button className="w-full bg-transparent border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 text-sm">
-            View Details
-          </button>
-          
-          
-          
-          </Link> 
+      <div className="mt-10">
+        <h1 className='text-3xl font-bold text-center mb-2'>নতুন আসা বইসমূহ</h1>
 
-   
-        </div>
-      </div>
-    </div>
-  ))}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
 
-     </div>
-      
-     </div>
+          {books.slice(3, 9).map((book) => {
+
+            const isAdded = cart.some(item => item.productId === book._id);
+
+            return (
+              <div key={book._id} className="bg-white rounded-xl shadow p-4">
+
+                <img src={book.image} className="h-60 w-full object-cover" />
+
+                <h2 className="text-lg font-bold mt-2">{book.title}</h2>
+                <p>{book.author}</p>
+
+                <p className="text-blue-600 font-bold">৳{book.price}</p>
+
                
-     <Link to="/categories" className="btn btn-primary w-max flex justify-center items-center mx-auto p-3 mt-10 mb-10">Explore More Books <GrLinkNext className='text-xl mt-1' />  </Link>
+      {user && ( 
+  <button
+    onClick={() => addToCart(book)} 
+    disabled={isAdded || book.stock === 0}
+    className={`w-full mt-3 py-2 rounded 
+      ${isAdded ? 'bg-gray-400' : 'bg-blue-600 text-white'}`}
+  >
+    {book.stock === 0
+      ? "Out of Stock"
+      : isAdded
+        ? "Added"
+        : "Add to Cart"}
+  </button>
+)}
+
+               
+  <Link to={`viewDetails/${book._id}`}>
+  <button className="w-full mt-2 border py-2 rounded">
+                    View Details
+                  </button>
+                </Link>
+
+              </div>
+            );
+          })}
+
+        </div>
+      </div> 
+
+      <Link to="/categories" className="btn btn-primary mt-10 mx-auto flex w-max">
+        Explore More Books <GrLinkNext />
+      </Link>
+
+      <Swip /> 
+
+      <div className="p-8 bg-white">
+  <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
+  How to Buy a Book
+   </h2>
   
-        <div className=" mt-10">
-            <h1 className='font-bold text-3xl text-center divider'> Customer review</h1> 
 
-             <Swip></Swip>
-        </div>  
-
-          {/* How to buy */} 
-
-
-        <div className="mt-20 bg-slate-50 dark:bg-slate-800 p-10 rounded-2xl">
-    <h2 className="text-3xl font-bold text-center mb-10 text-gray-800 dark:text-white">কিভাবে বই অর্ডার করবেন?</h2>
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div className="text-center">
-            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">১</div>
-            <h3 className="font-bold mb-2 text-base-200">বই পছন্দ করুন</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">আমাদের  সংগ্রহ থেকে আপনার পছন্দের বইটি বেছে নিন।</p>
-        </div>
-        <div className="text-center">
-            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">২</div>
-            <h3 className="font-bold mb-2 text-base-200">বিস্তারিত দেখুন</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">"View Details" বাটনে ক্লিক করে বইটির সারসংক্ষেপ ও দাম দেখে নিন।</p>
-        </div>
-        <div className="text-center">
-            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">৩</div>
-            <h3 className="font-bold mb-2  text-base-200">অর্ডার করুন</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">ডান পাশে নিচে থাকা "Buy Now" বাটনে ক্লিক করে আপনার তথ্য দিন।</p>
-        </div>
-        <div className="text-center">
-            <div className="bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">৪</div>
-            <h3 className="font-bold mb-2 text-base-200">বই বুঝে নিন</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">খুব দ্রুততম সময়ে আমরা আপনার ঠিকানায় বই পৌঁছে দেব।</p>
-        </div>
+  <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-6">
+   
+    <div className="flex flex-col items-center p-6 bg-blue-50 rounded-lg w-full md:w-64 border border-blue-100">
+      <span className="text-blue-600 font-bold text-lg mb-2">Step 1</span>
+      <h3 className="font-semibold text-gray-800">লগ ইন করুন</h3>
+      <p className="text-sm text-gray-600 text-center">প্রথমে আপনার একাউন্ট লগ ইন করুন</p>
     </div>
-</div> 
 
 
-<div className="mt-20 bg-blue-600 rounded-2xl p-8 text-center text-white">
-    <h2 className="text-2xl font-bold mb-4">কোন সমস্যা হলে জানান</h2>
-    <p className="mb-6">আপনার সমস্যার বিস্তারিত নিচের বক্সে লিখুন</p>
-    <div className="flex max-w-md mx-auto gap-2">
-        <input type="text" placeholder="আপনার সমস্যা..." className="input input-bordered w-full text-gray-800" />
-        <button className="btn btn-neutral">পাঠান</button>
+    <div className="flex flex-col items-center p-6 bg-green-50 rounded-lg w-full md:w-64 border border-green-100">
+      <span className="text-green-600 font-bold text-lg mb-2">Step 2</span>
+      <h3 className="font-semibold text-gray-800">এড টু  কার্ট</h3>
+      <p className="text-sm text-gray-600 text-center">বই এর কার্ট বাটন টা এ ক্লিক করুন</p>
     </div>
-</div>
-      
+
     
+    <div className="flex flex-col items-center p-6 bg-purple-50 rounded-lg w-full md:w-64 border border-purple-100">
+      <span className="text-purple-600 font-bold text-lg mb-2">Step 3</span>
+      <h3 className="font-semibold text-gray-800"> মাই কার্ট এ যান</h3>
+      <p className="text-sm text-gray-600 text-center">ড্যাশবোর্ড এর মাই কার্ট এ যান</p>
+    </div>
 
-          
-        </div>
-    );
+  
+    <div className="flex flex-col items-center p-6 bg-red-50 rounded-lg w-full md:w-64 border border-red-100">
+      <span className="text-red-600 font-bold text-lg mb-2">Step 4</span>
+      <h3 className="font-semibold text-gray-800">এড্রেস ও পেমেন্ট</h3>
+      <p className="text-sm text-gray-600 text-center">এড্রেস ফরম পূরণ করুণ আর পেমেন্ট করুন
+        
+      </p>
+    </div>
+
+  </div>
+</div>
+
+    </div>
+  );
 };
 
 export default Home;

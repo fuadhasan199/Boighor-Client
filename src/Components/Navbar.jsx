@@ -3,7 +3,10 @@ import logo from '../assets/logo.jpg'
 import { NavLink } from 'react-router';
 import { Link } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
+import { CartContext } from '../Provider/CartProvider';
+import { FaCartShopping } from 'react-icons/fa6';
 const Navbar = () => { 
+  const {cart}=useContext(CartContext)
   const {user,LogOut}=useContext(AuthContext) 
     return (
         <div>
@@ -38,9 +41,9 @@ const Navbar = () => {
   </div>
   <div className="navbar-end gap-12">
     
-    <div> 
+    <div className='flex gap-1'> 
 
-
+   <FaCartShopping className='text-2xl' /> : {cart.length} 
       
 
     </div>

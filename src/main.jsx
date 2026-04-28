@@ -52,12 +52,14 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>  
-    <CartProvider> 
- <AuthProvider>
-       <RouterProvider router={router}> </RouterProvider>
+     
+ <AuthProvider> 
+  <CartProvider> 
+ <RouterProvider router={router}> </RouterProvider>
+  </CartProvider>
+      
     </AuthProvider> 
 
-    </CartProvider>
    
    
   </StrictMode>,
