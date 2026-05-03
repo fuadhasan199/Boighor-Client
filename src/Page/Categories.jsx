@@ -6,20 +6,20 @@ import { AuthContext } from '../Provider/AuthProvider';
 
 const Categories = () => {
 
-    const { cart, addToCart } = useContext(CartContext);
-    const { user } = useContext(AuthContext);
+    const { cart, addToCart } = useContext(CartContext)
+    const { user } = useContext(AuthContext)
 
-    const [books, setBooks] = useState([]);
-    const [filteredBooks, setFilteredBooks] = useState([]);
-    const [activeCategory, setActiveCategory] = useState("সব");
+    const [books, setBooks] = useState([])
+    const [filteredBooks, setFilteredBooks] = useState([])
+    const [activeCategory, setActiveCategory] = useState("সব")
 
     useEffect(() => {
         axios.get(`http://localhost:3000/books`)
             .then(res => {
-                setBooks(res.data);
-                setFilteredBooks(res.data);
-            });
-    }, []);
+                setBooks(res.data)
+                setFilteredBooks(res.data)
+            })
+    }, [])
 
     const categories = [
         { name: 'সব', value: 'all' },
@@ -33,12 +33,12 @@ const Categories = () => {
     ];
 
     const handleFilter = (catName, catValue) => {
-        setActiveCategory(catName);
+        setActiveCategory(catName)
         if (catValue === 'all') {
-            setFilteredBooks(books);
+            setFilteredBooks(books)
         } else {
-            const filtered = books.filter(book => book.category === catValue);
-            setFilteredBooks(filtered);
+            const filtered = books.filter(book => book.category === catValue)
+            setFilteredBooks(filtered)
         }
     };
 

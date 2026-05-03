@@ -6,13 +6,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import Mainlayout from './Layout/Mainlayout.jsx';
 import Home from './Page/Home.jsx';
 import Categories from './Page/Categories.jsx';
-import Dashboard from './Page/Dashboard.jsx';
+
 import ViewDetails from './Extra-Component/ViewDetails.jsx';
 import SignUp from './Sign/SignUp.jsx';
 import SignIn from './Sign/SignIn.jsx';
 import AuthProvider from './Provider/AuthProvider.jsx';
 import Private from './Provider/Private.jsx';
 import CartProvider from './Provider/CartProvider.jsx';
+import Dashboard from './Dashboard/Dashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
        },
        {
         path:'dashboard',
-        element:<Private>  <Dashboard></Dashboard>  </Private>
+        element:<Private> <Dashboard></Dashboard>   </Private>
        }
     
     ]
