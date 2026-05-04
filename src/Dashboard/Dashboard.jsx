@@ -5,15 +5,20 @@ import { AuthContext } from '../Provider/AuthProvider';
 import axios from 'axios';
 import { Outlet, useNavigate } from 'react-router';
 import { MdManageAccounts, MdManageSearch } from 'react-icons/md';
+import { IoMdAddCircle } from 'react-icons/io';
+import { FaAddressBook } from 'react-icons/fa6';
 
 const Dashboard = () => { 
 const {user}=useContext(AuthContext) 
-const [isAdmin,setIsAdmin]=useState(false) 
+const [isAdmin,setIsAdmin]=useState(null) 
+const [loading,setLoading]=useState(true)
 
 useEffect(()=>{
- if(user?.email){
+ if(user?.email){ 
+   setLoading(true) 
    axios.get(`http://localhost:3000/users/admin/${user.email}`)
-   .then(res=>setIsAdmin(res.data.admin))
+   .then(res=>setIsAdmin(res.data.admin)) 
+   setLoading(false)
  }
 },[user?.email]) 
 
@@ -31,7 +36,7 @@ const navigate=useNavigate()
         {/* Sidebar toggle icon */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="my-1.5 inline-block size-4"><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path></svg>
       </label>
-      <div className="px-4">  Dashboard</div>
+      <div className="px-4 text-xl font-bold "> <span className='text-blue-500 font-bold text-xl'>{user?.displayName}</span>  Dashboard</div>
     </nav>
     {/* Page content here */}
     <div className="p-4"> <Outlet></Outlet>  </div>
@@ -55,7 +60,7 @@ const navigate=useNavigate()
 
         {/* profile section */}
 
-                 <li>
+         <li>
           <button onClick={()=>navigate('/dashboard/profile')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
           
             <FaUserCircle />
@@ -65,31 +70,15 @@ const navigate=useNavigate()
 
          <div className="divider"></div>
 
-        {/* List item */} 
+   
          
-
-
-        <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
-            {/* Settings icon */}
-           <FaShoppingCart />
-            <span className="is-drawer-close:hidden"> My Cart </span> 
-          </button>
-        </li> 
-
         
-
-    
-
-              <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Purchase">
-            {/* Settings icon */}
-            <BiSolidPurchaseTag />
-            <span className="is-drawer-close:hidden">My Purchase</span>
-          </button>
-        </li>  
-
-                   <li>
+        {loading ?( 
+           <div className="p-5 text-center loading">Loading.....</div> ):isAdmin?(
+             
+               <> 
+             {/* <span className='text-purple-900 mb-2 m-2 font-semibold text-xl sm:text-base'>Admin Dashboard</span> */}
+           <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Book">
            
            <MdManageSearch />
@@ -100,13 +89,47 @@ const navigate=useNavigate()
                         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage User">
            
-           <MdManageAccounts />
+        <FaAddressBook />
             <span className="is-drawer-close:hidden">Manage User</span>
+          </button>
+        </li>  
+
+        
+                        <li>
+          <button onClick={()=>navigate('/dashboard/AddBook')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Add-Book">
+           
+          <IoMdAddCircle />
+            <span className="is-drawer-close:hidden">Add Book</span>
           </button>
         </li> 
 
+ </>
 
 
+
+           ):( 
+                    <> 
+            <span className='text-purple-900 mb-2 m-2 font-semibold text-xl'>User Dashboard</span>
+                 <li>
+          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
+            {/* Settings icon */}
+           <FaShoppingCart />
+            <span className="is-drawer-close:hidden"> My Cart </span> 
+          </button>
+        </li> 
+
+           <li>
+          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Purchase">
+            {/* Settings icon */}
+            <BiSolidPurchaseTag />
+            <span className="is-drawer-close:hidden">My Purchase</span>
+          </button>
+        </li>  
+                </>
+                
+           )
+
+           }
 
 
       </ul>

@@ -19,6 +19,7 @@ import MyCart from './Dashboard/User/MyCart.jsx';
 import Mypurchase from './Dashboard/User/Mypurchase.jsx';
 import ManageBook from './Dashboard/Admin/ManageBook.jsx';
 import Manageuser from './Dashboard/Admin/Manageuser.jsx';
+import AddBook from './Dashboard/Admin/AddBook.jsx';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
             {
               path:"ManageUser",
               element:<Manageuser></Manageuser>
+            },
+            {
+              path:"AddBook",
+              element:<AddBook></AddBook>
             }
          ]
        }
