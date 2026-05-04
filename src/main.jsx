@@ -14,6 +14,11 @@ import AuthProvider from './Provider/AuthProvider.jsx';
 import Private from './Provider/Private.jsx';
 import CartProvider from './Provider/CartProvider.jsx';
 import Dashboard from './Dashboard/Dashboard.jsx';
+import Profile from './Dashboard/Profile.jsx';
+import MyCart from './Dashboard/User/MyCart.jsx';
+import Mypurchase from './Dashboard/User/Mypurchase.jsx';
+import ManageBook from './Dashboard/Admin/ManageBook.jsx';
+import Manageuser from './Dashboard/Admin/Manageuser.jsx';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +49,31 @@ const router = createBrowserRouter([
        },
        {
         path:'dashboard',
-        element:<Private> <Dashboard></Dashboard>   </Private>
+        element:<Private> <Dashboard></Dashboard>   </Private> ,
+         children:[
+           { 
+             path:"profile",
+             element:<Profile></Profile>
+           }, 
+          //  user routes
+             {
+               path:'MyCart',
+               element:<MyCart></MyCart>
+             },
+             {
+              path:'MyPurchase',
+              element:<Mypurchase></Mypurchase>
+             } ,
+            //  admin Routes
+            {
+               path:'ManageBook',
+               element:<ManageBook></ManageBook>
+            },
+            {
+              path:"ManageUser",
+              element:<Manageuser></Manageuser>
+            }
+         ]
        }
     
     ]
