@@ -3,7 +3,8 @@ import { BiSolidPurchaseTag } from 'react-icons/bi';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import { AuthContext } from '../Provider/AuthProvider';
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
+import { MdManageAccounts, MdManageSearch } from 'react-icons/md';
 
 const Dashboard = () => { 
 const {user}=useContext(AuthContext) 
@@ -33,7 +34,7 @@ const navigate=useNavigate()
       <div className="px-4">  Dashboard</div>
     </nav>
     {/* Page content here */}
-    <div className="p-4">Page Content here</div>
+    <div className="p-4"> <Outlet></Outlet>  </div>
   </div>
 
   <div className="drawer-side is-drawer-close:overflow-visible">
@@ -41,7 +42,9 @@ const navigate=useNavigate()
     <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
       {/* Sidebar content here */}
       <ul className="menu w-full grow">
-        {/* List item */}
+        {/* List item */} 
+
+
         <li>
           <button onClick={()=>navigate('/')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
             {/* Home icon */}
@@ -53,8 +56,8 @@ const navigate=useNavigate()
         {/* profile section */}
 
                  <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
-            {/* Settings icon */}
+          <button onClick={()=>navigate('/dashboard/profile')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Profile">
+          
             <FaUserCircle />
             <span className="is-drawer-close:hidden">Profile</span>
           </button>
@@ -62,7 +65,10 @@ const navigate=useNavigate()
 
          <div className="divider"></div>
 
-        {/* List item */}
+        {/* List item */} 
+         
+
+
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
             {/* Settings icon */}
@@ -81,7 +87,25 @@ const navigate=useNavigate()
             <BiSolidPurchaseTag />
             <span className="is-drawer-close:hidden">My Purchase</span>
           </button>
-        </li>
+        </li>  
+
+                   <li>
+          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Book">
+           
+           <MdManageSearch />
+            <span className="is-drawer-close:hidden">Manage Book</span>
+          </button>
+        </li>  
+
+                        <li>
+          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage User">
+           
+           <MdManageAccounts />
+            <span className="is-drawer-close:hidden">Manage User</span>
+          </button>
+        </li> 
+
+
 
 
 
