@@ -77,9 +77,12 @@ const navigate=useNavigate()
            <div className="p-5 text-center loading">Loading.....</div> ):isAdmin?(
              
                <> 
+            <div className='text-purple-900 mb-2 p-1 font-semibold text-xl  is-drawer-close:text-sm '>Admin</div> 
+            <div className="divider"></div>
+
              {/* <span className='text-purple-900 mb-2 m-2 font-semibold text-xl sm:text-base'>Admin Dashboard</span> */}
            <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Book">
+          <button onClick={()=>navigate('/dashboard/ManageBook')}  className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage Book">
            
            <MdManageSearch />
             <span className="is-drawer-close:hidden">Manage Book</span>
@@ -87,7 +90,7 @@ const navigate=useNavigate()
         </li>  
 
                         <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage User">
+          <button onClick={()=>navigate('/dashboard/ManageUser')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Manage User">
            
         <FaAddressBook />
             <span className="is-drawer-close:hidden">Manage User</span>
@@ -105,11 +108,9 @@ const navigate=useNavigate()
 
  </>
 
-
-
-           ):( 
+  ):( 
                     <> 
-            <span className='text-purple-900 mb-2 m-2 font-semibold text-xl'>User Dashboard</span>
+            <span className='text-purple-900 mb-2  font-semibold text-xl is-drawer-close:text-sm'> User </span>
                  <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
             {/* Settings icon */}
