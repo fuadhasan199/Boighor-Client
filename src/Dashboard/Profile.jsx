@@ -37,12 +37,8 @@ const Profile = () => {
             </div>
 
             <div className="flex gap-3">
-              <button className="px-5 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">
-                Edit Profile
-              </button>
-              <button className="px-5 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
-                Logout
-              </button>
+              
+             
             </div>
 
           </div>

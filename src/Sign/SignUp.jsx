@@ -74,7 +74,8 @@ const {
               name:user.displayName,
               email:user.email,
               mobile:user.phoneNumber,
-              role:'user'
+              role:'user',
+              status:'active'
            } 
            const response=await axios.post(`http://localhost:3000/user`,userInfo)
            if(response.data.insertedId){

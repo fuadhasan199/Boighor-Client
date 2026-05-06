@@ -19,7 +19,15 @@ const {
   
    const onSubmit=async(data)=>{
         try{
-           await SignIn(data.email,data.password) 
+           await SignIn(data.email,data.password)  
+
+           const res=await axios.get(`http://localhost:3000/user`)
+           const dbUser=res.data.find(user=>user.email===data.email) 
+
+           if (dbUser?.status === 'suspended') {
+              await Swal.fire('Blocked', 'Your account is suspended', 'error');
+               return 
+    }
            reset()
            Swal.fire('Success',"Login Successful","Success") 
            navigate("/")
@@ -33,13 +41,26 @@ const {
    const handleGoogleSignIn=async()=>{
       try{
          const result=await signInWithGoogle() 
-         const user=result.user 
+         const user=result.user  
+
+           const res=await axios.get(`http://localhost:3000/user`)
+           const dbUser=res.data.find(user=>user.email===user.email) 
+
+           if (dbUser?.status === 'suspended') {
+              await Swal.fire('Blocked', 'Your account is suspended', 'error');
+               return 
+    }
+
+
+
+
+
           const userInfo={
              name:user.displayName,
              email:user.email,
              mobile:user.phoneNumber,
              role:'user'
-          } 
+          }  
           const response=await axios.post(`http://localhost:3000/user`,userInfo) 
           Swal.fire({
                 icon: 'success',
