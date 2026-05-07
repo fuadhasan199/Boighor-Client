@@ -8,7 +8,7 @@ const ManageBook = () => {
     const [datas, setDatas] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
 
-  const navigate=useNavigate()
+    const navigate = useNavigate();
     const loadBooks = () => {
         axios.get(`http://localhost:3000/books`)
             .then(res => setDatas(res.data))
@@ -19,7 +19,6 @@ const ManageBook = () => {
         loadBooks();
     }, [])
 
-  
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -42,13 +41,11 @@ const ManageBook = () => {
         });
     }
 
-    
     const handleEditClick = (book) => {
         setSelectedBook(book);
         document.getElementById('edit_modal').showModal();
     }
 
-   
     const handleUpdate = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -74,47 +71,53 @@ const ManageBook = () => {
     }
 
     return (
-        <div className='bg-gray-200 p-4 rounded-md'>
-            <h2 className="text-xl font-bold text-green-700 mb-4">Manage Books</h2>
+        <div className='bg-gray-200 p-2 md:p-4 rounded-md min-h-screen'>
+            <h2 className="text-lg md:text-xl font-bold text-green-700 mb-4 px-2">Manage Books ({datas.length})</h2>
 
-            <div className="overflow-x-auto">
-                <table className="table table-zebra w-full bg-white rounded-lg shadow-md">
+          
+            <div className="overflow-x-auto w-full rounded-lg shadow-md">
+                <table className="table table-compact md:table-normal w-full">
                     <thead className="bg-gray-300 text-gray-800">
-                        <tr>
+                        <tr className="text-xs md:text-sm">
                             <th>#</th>
                             <th>Book</th>
-                            <th>Author</th>
-                            <th>Category</th>
+                            <th className="hidden sm:table-cell">Author</th>
+                            <th className="hidden md:table-cell">Category</th>
                             <th>Price</th>
                             <th className="text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                  {datas.map((data, index) => (
-               <tr key={data._id}>
-                 <td>{index + 1}</td>
-                 <td>
-                        <div className="flex items-center gap-3">
-                            <div className="avatar">
-                                <div className="mask mask-squircle h-12 w-12">
-                                    <img src={data.image} alt="Book" />
+                    <tbody className="text-xs md:text-sm">
+                        {datas.map((data, index) => (
+                            <tr key={data._id} className="hover:bg-gray-50 border-b border-gray-100">
+                                <th>{index + 1}</th>
+                                <td>
+                                    <div className="flex items-center gap-2 md:gap-3">
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle h-8 w-8 md:h-12 md:w-12">
+                                                <img src={data.image} alt="Book" />
                                             </div>
-                             </div>
-                           <div>
-                                            <div className="font-bold">{data.title}</div>
-                                            <div className="text-sm opacity-50">{data.category}</div>
+                                        </div>
+                                        <div className="max-w-[100px] md:max-w-none">
+                                            <div className="font-bold truncate">{data.title}</div>
+                                            <div className="text-[10px] md:text-sm opacity-50 block sm:hidden">{data.author}</div>
+                                            <div className="text-[10px] md:text-sm opacity-50">{data.category}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{data.author}</td>
-                                <td><span className="badge badge-info badge-sm">{data.category}</span></td>
-                                <td className="text-green-600 font-semibold">
-                                    <div className="flex items-center gap-1"><FaBangladeshiTakaSign />{data.price}</div>
+                                <td className="hidden sm:table-cell">{data.author}</td>
+                                <td className="hidden md:table-cell">
+                                    <span className="badge badge-info badge-sm whitespace-nowrap">{data.category}</span>
                                 </td>
-                                <td className="text-right space-x-2">
-                                    <button onClick={() => handleEditClick(data)} className="btn btn-xs btn-info">Edit</button>
-                                    <button onClick={() => handleDelete(data._id)} className="btn btn-xs btn-error">Delete</button>
-                                    <Link to={`/viewDetails/${data._id}`} className="btn btn-xs btn-ghost">Details</Link>
+                                <td className="text-green-600 font-semibold">
+                                    <div className="flex items-center gap-0.5"><FaBangladeshiTakaSign className="text-[10px] md:text-sm" />{data.price}</div>
+                                </td>
+                                <td className="text-right">
+                                    <div className="flex flex-col md:flex-row justify-end gap-1">
+                                        <button onClick={() => handleEditClick(data)} className="btn btn-[10px] md:btn-xs btn-info py-0 h-6">Edit</button>
+                                        <button onClick={() => handleDelete(data._id)} className="btn btn-[10px] md:btn-xs btn-error py-0 h-6">Delete</button>
+                                        <Link to={`/viewDetails/${data._id}`} className="btn btn-[10px] md:btn-xs btn-ghost py-0 h-6">Details</Link>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -122,26 +125,23 @@ const ManageBook = () => {
                 </table>
             </div>
 
-            {/* ---  Modal --- */}
+            {/* --- Modal (Responsive) --- */}
             <dialog id="edit_modal" className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box max-w-2xl">
-                    <h3 className="font-bold text-xl text-green-700 mb-4 border-b pb-2">Edit Book Information</h3>
+                <div className="modal-box max-w-2xl p-4 md:p-6">
+                    <h3 className="font-bold text-lg md:text-xl text-green-700 mb-4 border-b pb-2">Edit Book Information</h3>
                     
                     {selectedBook && (
-                        <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {/* Title */}
+                        <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                             <div className="form-control">
-                                <label className="label text-xs font-bold">Book Title</label>
+                                <label className="label text-[11px] font-bold">Book Title</label>
                                 <input type="text" name="title" defaultValue={selectedBook.title} className="input input-bordered input-sm" required />
                             </div>
-                            {/* Author */}
                             <div className="form-control">
-                                <label className="label text-xs font-bold">Author</label>
+                                <label className="label text-[11px] font-bold">Author</label>
                                 <input type="text" name="author" defaultValue={selectedBook.author} className="input input-bordered input-sm" required />
                             </div>
-                            {/* Category */}
                             <div className="form-control">
-                                <label className="label text-xs font-bold">Category</label>
+                                <label className="label text-[11px] font-bold">Category</label>
                                 <select name="category" defaultValue={selectedBook.category} className="select select-bordered select-sm">
                                     <option>Novel</option>
                                     <option>History</option>
@@ -149,24 +149,20 @@ const ManageBook = () => {
                                     <option>Poetry</option>
                                 </select>
                             </div>
-                            {/* Price */}
                             <div className="form-control">
-                                <label className="label text-xs font-bold">Price</label>
+                                <label className="label text-[11px] font-bold">Price</label>
                                 <input type="number" name="price" defaultValue={selectedBook.price} className="input input-bordered input-sm" required />
                             </div>
-                            {/* Image URL */}
                             <div className="form-control md:col-span-2">
-                                <label className="label text-xs font-bold">Image URL</label>
+                                <label className="label text-[11px] font-bold">Image URL</label>
                                 <input type="text" name="image" defaultValue={selectedBook.image} className="input input-bordered input-sm" required />
                             </div>
-                            {/* Description */}
                             <div className="form-control md:col-span-2">
-                                <label className="label text-xs font-bold">Short Description</label>
-                                <textarea name="description" defaultValue={selectedBook.description} className="textarea textarea-bordered h-20" required></textarea>
+                                <label className="label text-[11px] font-bold">Short Description</label>
+                                <textarea name="description" defaultValue={selectedBook.description} className="textarea textarea-bordered h-20 text-sm" required></textarea>
                             </div>
 
-                            {/* Buttons */}
-                            <div className="md:col-span-2 flex justify-end gap-3 mt-4">
+                            <div className="md:col-span-2 flex justify-end gap-2 mt-4">
                                 <button type="button" onClick={() => document.getElementById('edit_modal').close()} className="btn btn-sm">Cancel</button>
                                 <button type="submit" className="btn btn-sm btn-success text-white">Update Book</button>
                             </div>
