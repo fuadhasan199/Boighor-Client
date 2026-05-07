@@ -5,10 +5,14 @@ import Swal from 'sweetalert2';
 const Manageuser = () => { 
 
 const[users,setUsers]=useState([]) 
+const [loading,setloading]=useState(true)
 
 useEffect(()=>{
-axios.get(`http://localhost:3000/user`).then(res=>setUsers(res.data)) 
-.catch(error=>console.log(error.message))
+axios.get(`http://localhost:3000/user`).then(res=>{
+  setUsers(res.data) 
+  setloading(false)
+})
+ .catch(error=>console.log(error.message)) 
 
 },[]) 
 
@@ -24,7 +28,16 @@ axios.get(`http://localhost:3000/user`).then(res=>setUsers(res.data))
          ) 
        
     })
- }
+ } 
+
+ if (loading) {
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+    <span className="loading loading-dots loading-lg"></span>
+     <span className="loading loading-dots loading-xl"></span>
+    </div>
+  );
+}
 
 
 

@@ -74,7 +74,9 @@ const navigate=useNavigate()
          
         
         {loading ?( 
-           <div className="p-5 text-center loading">Loading.....</div> ):isAdmin?(
+           <div className="flex justify-center items-center py-10">
+         <span className="loading loading-spinner loading-md text-success"></span>
+                         </div> ):isAdmin?(
              
                <> 
             <div className='text-purple-900 mb-2 p-1 font-semibold text-xl  is-drawer-close:text-sm '>Admin</div> 
