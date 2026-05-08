@@ -34,7 +34,7 @@ const {
               name:data.name,
               email:data.email,
               mobile:data.mobile,
-              role:data.userType
+              role:"user"
           } 
 
           const response=await axios.post(`http://localhost:3000/user`,userInfo) 
@@ -125,13 +125,13 @@ const {
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
           /> {errors.password &&  <p className='text-red-600 text-sm mt-1'>{errors.password.message}</p>}
 
-          <select {...register('userType')}
+          {/* <select {...register('userType')}
             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
             defaultValue="user"
           >
             <option value="user">User</option>
             <option value="admin">Admin</option>
-          </select>
+          </select> */}
 
           <button 
             type="submit"

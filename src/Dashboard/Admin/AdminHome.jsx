@@ -29,7 +29,7 @@ const AdminHome = () => {
                 <div className="stat bg-white shadow rounded-lg p-6 flex items-center gap-4">
                     <div className="p-4 bg-blue-100 text-blue-600 rounded-full"><FaUsers size={30} /></div>
                     <div>
-                        <div className="stat-title text-gray-500">Total Users</div>
+                        <div className="stat-title text-gray-500">Register Users</div>
                         <div className="stat-value text-2xl font-bold">{stats.users}</div>
                     </div>
                 </div>
