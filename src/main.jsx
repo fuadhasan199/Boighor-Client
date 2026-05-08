@@ -21,6 +21,8 @@ import ManageBook from './Dashboard/Admin/ManageBook.jsx';
 import Manageuser from './Dashboard/Admin/Manageuser.jsx';
 import AddBook from './Dashboard/Admin/AddBook.jsx';
 import AdminHome from './Dashboard/Admin/AdminHome.jsx';
+import UserHome from './Dashboard/User/UserHome.jsx';
+import DashboardHome from './Dashboard/DashboardHome.jsx';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +57,14 @@ const router = createBrowserRouter([
          children:[ 
            {
              index:true,
+             element:<DashboardHome></DashboardHome>
+           },
+           {
+             path:'userHome',
+             element:<UserHome></UserHome>
+           },
+           {
+             path:'adminHome',
              element:<AdminHome></AdminHome>
            },
            { 
