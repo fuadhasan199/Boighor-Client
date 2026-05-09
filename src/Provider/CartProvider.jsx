@@ -1,56 +1,82 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { AuthContext } from './AuthProvider';
+import axios from 'axios'; 
 import Swal from 'sweetalert2';
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
-  const [cart, setCart] = useState([]);
+    const { user } = useContext(AuthContext);
+    const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:3000/cart?email=${user.email}`)
-        .then(res => res.json())
-        .then(data => setCart(data));
-    } else {
-      setCart([]);
-    }
-  }, [user]);
+   
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:3000/cart?email=${user.email}`)
+                .then(res => {
+                    setCart(res.data);
+                })
+                .catch(err => console.error("Cart loading error:", err));
+        } else {
+            setCart([]);
+        }
+    }, [user?.email]); 
 
-  const addToCart = async (product) => {
-    if (!user) {
-      Swal.fire("Login first!");
-      return;
-    }
-
-    const exists = cart.find(item => item.productId === product._id);
-    if (exists) {
-      Swal.fire("Already added!");
-      return;
-    }
-
-    const item = {
-      email: user.email,
-      productId: product._id,
-      title: product.title,
-      price: product.price
+   
+    const removeFromCart = (id) => {
+        const remaining = cart.filter(item => item._id !== id);
+        setCart(remaining);
     };
 
-    await fetch('http://localhost:3000/cart', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(item)
-    });
+    
+    const addToCart = async (product) => {
+        if (!user) {
+            Swal.fire("Login first!");
+            return;
+        }
 
-    setCart(prev => [...prev, item]);
-  };
+        
+        const exists = cart.find(item => item.productId === product._id);
+        if (exists) {
+            Swal.fire("Already added!");
+            return;
+        }
 
-  return (
-    <CartContext.Provider value={{ cart, addToCart }}>
-      {children}
-    </CartContext.Provider>
-  );
+        const item = {
+            email: user.email,
+            productId: product._id,
+            title: product.title,
+            price: product.price,
+            image: product.image 
+        };
+
+        try {
+            const res = await axios.post('http://localhost:3000/cart', item);
+            
+            if (res.data.insertedId) {
+                
+                const newItem = { ...item, _id: res.data.insertedId };
+                setCart(prev => [...prev, newItem]);
+                
+                Swal.fire({
+                    
+                    icon: "success",
+                    title: "Added to cart",
+                    showConfirmButton: false,
+                   
+                });
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            Swal.fire("Error", "Could not add to cart", "error");
+        }
+    };
+
+    return (
+        <CartContext value={{ cart, addToCart, removeFromCart }}>
+            {children}
+        </CartContext>
+    );
 };
 
 export default CartProvider;

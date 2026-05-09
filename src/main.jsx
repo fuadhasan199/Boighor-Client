@@ -71,7 +71,7 @@ const router = createBrowserRouter([
              path:"profile",
              element:<Profile></Profile>
            }, 
-          //  user routes
+         
              {
                path:'MyCart',
                element:<MyCart></MyCart>
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
               path:'MyPurchase',
               element:<Mypurchase></Mypurchase>
              } ,
-            //  admin Routes
+           
             {
                path:'ManageBook',
                element:<ManageBook></ManageBook>

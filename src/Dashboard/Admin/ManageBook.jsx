@@ -88,37 +88,37 @@ const ManageBook = () => {
                         </tr>
                     </thead>
                     <tbody className="text-xs md:text-sm">
-                        {datas.map((data, index) => (
-                            <tr key={data._id} className="hover:bg-gray-50 border-b border-gray-100">
-                                <th>{index + 1}</th>
-                                <td>
-                                    <div className="flex items-center gap-2 md:gap-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle h-8 w-8 md:h-12 md:w-12">
-                                                <img src={data.image} alt="Book" />
-                                            </div>
-                                        </div>
-                                        <div className="max-w-[100px] md:max-w-none">
-                                            <div className="font-bold truncate">{data.title}</div>
-                                            <div className="text-[10px] md:text-sm opacity-50 block sm:hidden">{data.author}</div>
-                                            <div className="text-[10px] md:text-sm opacity-50">{data.category}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="hidden sm:table-cell">{data.author}</td>
-                                <td className="hidden md:table-cell">
-                                    <span className="badge badge-info badge-sm whitespace-nowrap">{data.category}</span>
-                                </td>
-                                <td className="text-green-600 font-semibold">
-                                    <div className="flex items-center gap-0.5"><FaBangladeshiTakaSign className="text-[10px] md:text-sm" />{data.price}</div>
-                                </td>
-                                <td className="text-right">
-                                    <div className="flex flex-col md:flex-row justify-end gap-1">
-                                        <button onClick={() => handleEditClick(data)} className="btn btn-[10px] md:btn-xs btn-info py-0 h-6">Edit</button>
-                                        <button onClick={() => handleDelete(data._id)} className="btn btn-[10px] md:btn-xs btn-error py-0 h-6">Delete</button>
-                                        <Link to={`/viewDetails/${data._id}`} className="btn btn-[10px] md:btn-xs btn-ghost py-0 h-6">Details</Link>
-                                    </div>
-                                </td>
+             {datas.map((data, index) => (
+         <tr key={data._id} className="hover:bg-gray-50 border-b border-gray-100">
+         <th>{index + 1}</th>
+             <td>
+         <div className="flex items-center gap-2 md:gap-3">
+          <div className="avatar">
+              <div className="mask mask-squircle h-8 w-8 md:h-12 md:w-12">
+                  <img src={data.image} alt="Book" />
+             </div>
+                 </div>
+                     <div className="max-w-[100px] md:max-w-none">
+                             <div className="font-bold truncate">{data.title}</div>
+                          <div className="text-[10px] md:text-sm opacity-50 block sm:hidden">{data.author}</div>
+                            <div className="text-[10px] md:text-sm opacity-50">{data.category}</div>
+                           </div>
+                            </div>
+                       </td>
+           <td className="hidden sm:table-cell">{data.author}</td>
+                   <td className="hidden md:table-cell">
+                          <span className="badge badge-info badge-sm whitespace-nowrap">{data.category}</span>
+                             </td>
+             <td className="text-green-600 font-semibold">
+                       <div className="flex items-center gap-0.5"><FaBangladeshiTakaSign className="text-[10px] md:text-sm" />{data.price}</div>
+                  </td>
+                   <td className="text-right">
+                      <div className="flex flex-col md:flex-row justify-end gap-1">
+                     <button onClick={() => handleEditClick(data)} className="btn btn-[10px] md:btn-xs btn-info py-0 h-6">Edit</button>
+                        <button onClick={() => handleDelete(data._id)} className="btn btn-[10px] md:btn-xs btn-error py-0 h-6">Delete</button>
+                          <Link to={`/viewDetails/${data._id}`} className="btn btn-[10px] md:btn-xs btn-ghost py-0 h-6">Details</Link>
+                           </div>
+                          </td>
                             </tr>
                         ))}
                     </tbody>

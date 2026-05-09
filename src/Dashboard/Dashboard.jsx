@@ -114,7 +114,7 @@ const navigate=useNavigate()
                     <> 
             <span className='text-purple-900 mb-2  font-semibold text-xl is-drawer-close:text-sm'> User </span>
                  <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
+          <button  onClick={()=>navigate('/dashboard/MyCart')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My-Cart">
             {/* Settings icon */}
            <FaShoppingCart />
             <span className="is-drawer-close:hidden"> My Cart </span> 
@@ -122,7 +122,7 @@ const navigate=useNavigate()
         </li> 
 
            <li>
-          <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Purchase">
+          <button onClick={()=>navigate('/dashboard/MyPurchase')} className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Purchase">
             {/* Settings icon */}
             <BiSolidPurchaseTag />
             <span className="is-drawer-close:hidden">My Purchase</span>
