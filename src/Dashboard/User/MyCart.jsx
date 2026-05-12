@@ -4,6 +4,8 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
+
 
 const MyCart = () => {
  
@@ -11,7 +13,7 @@ const MyCart = () => {
 
   
     const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price || 0), 0);
-
+const navigate=useNavigate()
 
 const handleDelete=async(id)=>{
    Swal.fire({
@@ -105,7 +107,7 @@ const handleDelete=async(id)=>{
                         
                       
                         <button 
-                            onClick={() => alert("Payment logic will be implemented here.")}
+                            onClick={() => navigate("/dashboard/CheckOut")}
                             className="btn btn-primary w-full text-white font-bold tracking-wide"
                         >
                             Proceed to Payment

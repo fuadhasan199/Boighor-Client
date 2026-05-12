@@ -23,6 +23,8 @@ import AddBook from './Dashboard/Admin/AddBook.jsx';
 import AdminHome from './Dashboard/Admin/AdminHome.jsx';
 import UserHome from './Dashboard/User/UserHome.jsx';
 import DashboardHome from './Dashboard/DashboardHome.jsx';
+import CheckOut from './Dashboard/CheckOut.jsx';
+import Success from './Dashboard/Success.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,20 +37,20 @@ const router = createBrowserRouter([
          
        } ,
        {
-        path:'categories',
+        path:'/categories',
         element:<Categories></Categories>
        } ,
        {
-        path:'viewDetails/:id',
+        path:'/viewDetails/:id',
         element: <Private> <ViewDetails></ViewDetails> </Private>
        
        },
        {
-        path:'SignUp',
+        path:'/SignUp',
         element:<SignUp></SignUp>
        },
        {
-        path:'SignIn',
+        path:'/SignIn',
         element:<SignIn></SignIn>
        },
        {
@@ -92,6 +94,13 @@ const router = createBrowserRouter([
             {
               path:"AddBook",
               element:<AddBook></AddBook>
+            },
+            {
+              path:"CheckOut",
+              element:<CheckOut></CheckOut>
+            },{
+              path:"Success",
+              element:<Success></Success>
             }
          ]
        }
