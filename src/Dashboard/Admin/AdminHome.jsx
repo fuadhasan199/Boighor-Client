@@ -1,22 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaBook, FaUsers, FaShoppingCart } from 'react-icons/fa';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const AdminHome = () => {
     const [stats, setStats] = useState({ books: 0, users: 0 });
+     const {user}=useContext(AuthContext)
+useEffect(() => { 
 
-    useEffect(() => {
-    
-        axios.get('http://localhost:3000/books').then(res => setStats(prev => ({...prev, books: res.data.length})));
-        axios.get('http://localhost:3000/user').then(res => setStats(prev => ({...prev, users: res.data.length})));
-    }, []);
+   const fetchStats = async () => {
+
+      if(user){
+
+         try{
+
+            const token = await user.getIdToken();
+
+            const config = {
+               headers:{
+                  authorization:`Bearer ${token}`
+               }
+            };
+
+            const [booksRes, usersRes] = await Promise.all([
+
+               axios.get('http://localhost:3000/books', config),
+
+               axios.get(`http://localhost:3000/user?email=${user.email}`, config)
+
+            ]);
+
+            setStats({
+               books: booksRes.data.length,
+               users: usersRes.data.length
+            });
+
+         }
+         catch(error){
+
+            console.error(error);
+
+         }
+      }
+   }
+
+   fetchStats();
+
+}, [user]);
 
     return (
         <div className="p-6 bg-gray-200 rounded-md min-h-screen">
             <h2 className="text-3xl font-bold mb-6 text-gray-800">Welcome Back, Admin!</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Stats Card 1 */}
+              
                 <div className="stat bg-white shadow rounded-lg p-6 flex items-center gap-4">
                     <div className="p-4 bg-green-100 text-green-600 rounded-full"><FaBook size={30} /></div>
                     <div>
@@ -25,7 +62,7 @@ const AdminHome = () => {
                     </div>
                 </div>
 
-                {/* Stats Card 2 */}
+               
                 <div className="stat bg-white shadow rounded-lg p-6 flex items-center gap-4">
                     <div className="p-4 bg-blue-100 text-blue-600 rounded-full"><FaUsers size={30} /></div>
                     <div>

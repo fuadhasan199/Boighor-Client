@@ -1,25 +1,41 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const Manageuser = () => { 
 
 const[users,setUsers]=useState([]) 
-const [loading,setloading]=useState(true)
+const [loading,setloading]=useState(true) 
+const {user}=useContext(AuthContext)
 
-useEffect(()=>{
-axios.get(`http://localhost:3000/user`).then(res=>{
-  setUsers(res.data) 
-  setloading(false)
-})
- .catch(error=>console.log(error.message)) 
+useEffect(() => {
+        const fetchUsers = async () => {
+            if (user) {
+                try {
+                    const token = await user.getIdToken();
+                    
+                    const res = await axios.get(`http://localhost:3000/user?email=${user.email}`, {
+                        headers: { authorization: `Bearer ${token}` }
+                    });
+                    setUsers(res.data);
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    setloading(false);
+                }
+            }
+        };
+        fetchUsers();
+    }, [user]);
 
-},[]) 
 
-
- const handleSuspend=(id,currentStatus)=>{ 
+ const handleSuspend=async(id,currentStatus)=>{ 
     const newStatus=currentStatus==='active'?'suspended':"active" 
-    axios.patch(`http://localhost:3000/user/${id}`,{status:newStatus})
+    const token = await user.getIdToken();
+    axios.patch(`http://localhost:3000/user/${id}`, { status: newStatus }, {
+            headers: { authorization: `Bearer ${token}` }
+        })
     .then(()=>{
          setUsers(prev=>
            prev.map(user=>

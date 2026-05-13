@@ -17,62 +17,80 @@ const {
     formState: { errors },
   } = useForm() 
   
-   const onSubmit=async(data)=>{
-        try{
-           await SignIn(data.email,data.password)  
+const onSubmit = async (data) => {
+    try {
+        const result = await SignIn(data.email, data.password);
+      
+        const token = await result.user.getIdToken();
 
-           const res=await axios.get(`http://localhost:3000/user`)
-           const dbUser=res.data.find(user=>user.email===data.email) 
+       
+        const res = await axios.get(`http://localhost:3000/user?email=${data.email}`, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
 
-           if (dbUser?.status === 'suspended') {
-              await Swal.fire('Blocked', 'Your account is suspended', 'error');
-               return 
-    }
-           reset()
-           Swal.fire('Success',"Login Successful","Success") 
-           navigate("/")
-        }  
-         
-        catch(error){
-            Swal.fire('Error',error.message,"error")
+        const dbUser = res.data.find(user => user.email === data.email)
+
+        if (dbUser?.status === 'suspended') {
+            await Swal.fire('Blocked', 'Your account is suspended', 'error');
+            return;
         }
-   } 
 
-   const handleGoogleSignIn=async()=>{
-      try{
-         const result=await signInWithGoogle() 
-         const user=result.user  
+        reset();
+        Swal.fire('Success', "Login Successful", "success")
+        navigate("/");
+    } catch (error) {
+        Swal.fire('Error', error.message, "error")
+    }
+}
 
-           const res=await axios.get(`http://localhost:3000/user`)
-           const dbUser=res.data.find(user=>user.email===user.email) 
+  const handleGoogleSignIn = async () => {
+  try {
+    const result = await signInWithGoogle();
+    const user = result.user;
+    const token = await user.getIdToken()
 
-           if (dbUser?.status === 'suspended') {
-              await Swal.fire('Blocked', 'Your account is suspended', 'error');
-               return 
+    
+    const res = await axios.get(`http://localhost:3000/user`, {
+      headers: {
+        Authorization: `Bearer ${token}` 
+      }
+    });
+
+   
+    const dbUser = res.data.find(u => u.email === user.email);
+
+    if (dbUser?.status === 'suspended') {
+      await Swal.fire('Blocked', 'Your account is suspended', 'error');
+      return
     }
 
+   
+    const userInfo = {
+      name: user.displayName,
+      email: user.email,
+      mobile: user.phoneNumber || 'N/A',
+      role: 'user'
+    };
 
-
-
-
-          const userInfo={
-             name:user.displayName,
-             email:user.email,
-             mobile:user.phoneNumber,
-             role:'user'
-          }  
-          const response=await axios.post(`http://localhost:3000/user`,userInfo) 
-          Swal.fire({
-                icon: 'success',
-                title: 'Google Login Successful!',
-                
-            });  
-            navigate('/')
-      } 
-      catch(error){
-        Swal.fire('Error',error.message,"error")
+    
+    await axios.post(`http://localhost:3000/user`, userInfo, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-   }
+    });
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Google Login Successful!',
+    });
+    navigate('/');
+  } catch (error) {
+    console.error(error);
+    Swal.fire('Error', error.message, "error");
+  }
+}
 
  
 

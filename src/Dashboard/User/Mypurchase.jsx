@@ -7,19 +7,31 @@ const Mypurchase = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (user?.email) {
-            axios.get(`http://localhost:3000/orders?email=${user.email}`)
-                .then(res => {
+useEffect(() => {
+        const fetchOrders = async () => {
+            if (user?.email) {
+                try {
+                    
+                    const token = await user.getIdToken();
+
+                    
+                    const res = await axios.get(`http://localhost:3000/orders?email=${user.email}`, {
+                        headers: {
+                            authorization: `Bearer ${token}`
+                        }
+                    });
+
                     setOrders(res.data);
                     setLoading(false);
-                })
-                .catch(err => {
-                    console.error(err);
+                } catch (err) {
+                    console.error("Error fetching orders:", err);
                     setLoading(false);
-                });
-        }
-    }, [user?.email]);
+                }
+            }
+        };
+
+        fetchOrders();
+    }, [user]);
     if (loading) return <p className="text-center mt-10">Loading orders...</p>;
  return (
         <div className="max-w-4xl mx-auto p-8 bg-gray-200 rounded-md mt-2"> 
@@ -39,7 +51,7 @@ const Mypurchase = () => {
                                     <span className={`badge ${order.paymentStatus === 'paid' ? 'badge-success' : 'badge-warning'}`}>
                                         {order.paymentStatus}
                                     </span>
-                                    <p className="text-sm mt-1 capitalize">Method: {order.paymentMethod}</p>
+                      <p className="text-sm mt-1 capitalize">Method: {order.paymentMethod}</p>
                                 </div>
                             </div>
                         </div>

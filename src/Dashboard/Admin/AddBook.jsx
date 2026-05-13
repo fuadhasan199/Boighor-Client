@@ -1,54 +1,65 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const AddBook = () => {
+const {user}=useContext(AuthContext) 
 
     const handleAddBook = async (e) => {
-        e.preventDefault();
-        const form = e.target;
+        e.preventDefault(); 
 
-        const title = form.title.value;
-        const author = form.author.value;
-        const category = form.category.value;
-        const price = parseFloat(form.price.value);
-        const discountPrice = parseFloat(form.discountPrice.value);
-        const stock = parseInt(form.stock.value);
-        const image = form.image.value;
-        const shortDescription = form.shortDescription.value;
-        const description = form.description.value;
-
-        const newBook = {
-            title,
-            author,
-            category,
-            price,
-            discountPrice,
-            stock,
-            image,
-            shortDescription,
-            description
-        };
-
-        try {
+        const form = e.target; 
+                if(!user){
+    return Swal.fire('Error', 'Please login First','error') 
+  }
+            
+  try {
            
-            const res = await axios.post('http://localhost:3000/books', newBook);
+            const token = await user.getIdToken()
+
+            const title = form.title.value
+            const author = form.author.value
+            const category = form.category.value
+            const price = parseFloat(form.price.value)
+            const discountPrice = parseFloat(form.discountPrice.value)
+            const stock = parseInt(form.stock.value)
+            const image = form.image.value;
+            const shortDescription = form.shortDescription.value
+            const description = form.description.value
+            const newBook = {
+                title,
+                author,
+                category,
+                price,
+                discountPrice,
+                stock,
+                image,
+                shortDescription,
+                description
+            };
+
+          
+            const res = await axios.post('http://localhost:3000/books', newBook, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            });
+
             if (res.data.insertedId) {
                 Swal.fire({
                     title: 'Success!',
                     text: 'Book Added Successfully',
                     icon: 'success',
-                    
-                })
+                });
                 form.reset();
             }
         } catch (error) {
             console.error(error);
             Swal.fire({
                 title: 'Error!',
-                text: 'Something went wrong',
+                text: error.response?.status === 403 ? 'Unauthorized: Admin only' : 'Something went wrong',
                 icon: 'error',
-                confirmButtonText: 'Try Again'
             });
         }
     };

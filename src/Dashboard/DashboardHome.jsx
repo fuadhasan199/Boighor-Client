@@ -10,22 +10,26 @@ const DashboardHome = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [roleLoading, setRoleLoading] = useState(true);
 
-    useEffect(() => { 
-       
+useEffect(() => {
+    const checkAdminStatus = async () => {
         if (user?.email) {
-            axios.get(`http://localhost:3000/users/admin/${user.email}`)
-                .then(res => {
-                    setIsAdmin(res.data.admin)
-                    setRoleLoading(false);
-                })
-                .catch(err => {
-                    console.error("Error fetching admin status:", err);
-                    setRoleLoading(false);
+            try {
+                const token = await user.getIdToken();
+                const res = await axios.get(`http://localhost:3000/users/admin/${user.email}`, {
+                    headers: { authorization: `Bearer ${token}` }
                 });
+                setIsAdmin(res.data.admin);
+            } catch (err) {
+                console.error("Error fetching admin status:", err);
+            } finally {
+                setRoleLoading(false);
+            }
         } else if (!authLoading && !user) {
-            setRoleLoading(false)
+            setRoleLoading(false);
         }
-    }, [user, authLoading]);
+    };
+    checkAdminStatus();
+}, [user, authLoading]);
 
     if (authLoading || roleLoading) {
         return (

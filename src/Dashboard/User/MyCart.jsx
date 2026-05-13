@@ -5,36 +5,49 @@ import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 
 const MyCart = () => {
  
     const { cart , removeFromCart} = useContext(CartContext);
-
+ const {user}=useContext(AuthContext)
   
     const totalPrice = cart.reduce((total, item) => total + parseFloat(item.price || 0), 0);
 const navigate=useNavigate()
 
-const handleDelete=async(id)=>{
-   Swal.fire({
-     title:"Are you sure?",
-     text:"You won't be able to revert this!",
-     icon:"warning",
-     showCancelButton:true,
-   }) .then((res=>{
-     if(res.isConfirmed){
-       axios.delete(`http://localhost:3000/cart/${id}`) 
-       .then(res=>{
-           if(res.data.deletedCount>0){ 
-             removeFromCart(id)
-                Swal.fire("Deleted!","This item has been deleted","success")
-           }
-       })
-     }
-   }))
+const handleDelete = async (id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (res) => { 
+            if (res.isConfirmed) {
+                try {
+                    
+                    const token = await user?.getIdToken();
 
-   
-}
+                    const response = await axios.delete(`http://localhost:3000/cart/${id}`, {
+                        headers: {
+                            authorization: `Bearer ${token}` 
+                        }
+                    });
+
+                    if (response.data.deletedCount > 0) {
+                        removeFromCart(id);
+                        Swal.fire("Deleted!", "This item has been deleted", "success");
+                    }
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire("Error!", "Failed to delete item", "error");
+                }
+            }
+        });
+    };
 
     return (
         <div className=" bg-gray-200 min-h-screen rounded-md p-5">

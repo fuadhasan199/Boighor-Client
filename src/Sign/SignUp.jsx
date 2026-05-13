@@ -12,7 +12,8 @@ const SignUp = () => {
   const {signInWithGoogle}=useContext(AuthContext) 
  
 
-  const navigate=useNavigate()
+  const navigate=useNavigate() 
+  
 
 const {
     register,
@@ -28,7 +29,7 @@ const {
          const result=await createUserWithEmailAndPassword(auth,data.email,data.password) 
 
           await updateProfile(auth.currentUser,{displayName:data.name}) 
-
+          const token=await result.user.getIdToken()
 
           const userInfo={
               name:data.name,
@@ -37,7 +38,11 @@ const {
               role:"user"
           } 
 
-          const response=await axios.post(`http://localhost:3000/user`,userInfo) 
+          const response=await axios.post(`http://localhost:3000/user`,userInfo,{
+              headers:{
+                  Authorization:`Bearer ${token}`
+              }
+          }) 
 
           if(response.data.insertedId){
               reset() 
@@ -69,7 +74,7 @@ const {
        try{
            const result=await signInWithGoogle()
            const user=result.user  
-
+            const token=await user.getIdToken()
            const userInfo={
               name:user.displayName,
               email:user.email,
@@ -77,7 +82,11 @@ const {
               role:'user',
               status:'active'
            } 
-           const response=await axios.post(`http://localhost:3000/user`,userInfo)
+           const response=await axios.post(`http://localhost:3000/user`,userInfo,{
+              headers:{
+                  Authorization:`Bearer ${token}`
+              }
+          })
            if(response.data.insertedId){
              Swal.fire('Success', 'Registration Successful via Google', 'success')
              navigate('/')
@@ -89,7 +98,7 @@ const {
 
 
 
-
+ 
      }
 
     return (

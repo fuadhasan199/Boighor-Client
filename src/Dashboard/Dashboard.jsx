@@ -13,14 +13,44 @@ const {user}=useContext(AuthContext)
 const [isAdmin,setIsAdmin]=useState(null) 
 const [loading,setLoading]=useState(true)
 
-useEffect(()=>{
- if(user?.email){ 
-   setLoading(true) 
-   axios.get(`http://localhost:3000/users/admin/${user.email}`)
-   .then(res=>setIsAdmin(res.data.admin)) 
-   setLoading(false)
- }
-},[user?.email]) 
+useEffect(() => {
+
+   const checkAdmin = async () => {
+
+      if(user?.email){
+
+         try{
+
+            const token = await user.getIdToken();
+
+            const res = await axios.get(
+               `http://localhost:3000/users/admin/${user.email}`,
+               {
+                  headers:{
+                     authorization:`Bearer ${token}`
+                  }
+               }
+            );
+
+            setIsAdmin(res.data.admin);
+
+         }
+         catch(error){
+
+            console.error("Error checking admin status:", error);
+
+            setIsAdmin(false);
+
+         }
+         finally{
+            setLoading(false);
+         }
+      }
+   }
+
+   checkAdmin();
+
+}, [user]);
 
  
 

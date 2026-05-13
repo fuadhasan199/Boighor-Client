@@ -10,17 +10,21 @@ const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
 
    
-    useEffect(() => {
+useEffect(() => {
+    const fetchCart = async () => {
         if (user?.email) {
-            axios.get(`http://localhost:3000/cart?email=${user.email}`)
-                .then(res => {
-                    setCart(res.data);
-                })
-                .catch(err => console.error("Cart loading error:", err));
+            const token = await user.getIdToken();
+            axios.get(`http://localhost:3000/cart?email=${user.email}`, {
+                headers: { authorization: `Bearer ${token}` }
+            })
+            .then(res => setCart(res.data))
+            .catch(err => console.error("Cart loading error:", err));
         } else {
             setCart([]);
         }
-    }, [user?.email]); 
+    };
+    fetchCart();
+}, [user?.email]);
 
    
     const removeFromCart = (id) => {

@@ -11,19 +11,27 @@ const UserHome = () => {
         totalSpent: 0
     });
 
-    useEffect(() => {
+   useEffect(() => {
+    const fetchStats = async () => {
         if (user?.email) {
-            axios.get(`http://localhost:3000/user-stats?email=${user.email}`)
-                .then(res => {
-                
-                    setStats({
-                        totalOrders: res.data.totalOrders,
-                        totalSpent: res.data.totalSpent
-                    });
-                })
-                .catch(err => console.error("Stats loading error:", err));
+            try {
+                const token = await user.getIdToken()
+                const res = await axios.get(`http://localhost:3000/user-stats?email=${user.email}`, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
+                setStats({
+                    totalOrders: res.data.totalOrders,
+                    totalSpent: res.data.totalSpent
+                });
+            } catch (err) {
+                console.error("Stats loading error:", err);
+            }
         }
-    }, [user?.email]);
+    };
+    fetchStats();
+}, [user?.email]);
 
     return (
         <div className="p-8 bg-gray-50 min-h-screen">
