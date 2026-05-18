@@ -15,7 +15,7 @@ useEffect(() => {
         if (user?.email) {
             try {
                 const token = await user.getIdToken();
-                const res = await axios.get(`http://localhost:3000/users/admin/${user.email}`, {
+                const res = await axios.get(`https://boighorserver.vercel.app/users/admin/${user.email}`, {
                     headers: { authorization: `Bearer ${token}` }
                 });
                 setIsAdmin(res.data.admin);

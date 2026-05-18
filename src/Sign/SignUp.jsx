@@ -38,7 +38,7 @@ const {
               role:"user"
           } 
 
-          const response=await axios.post(`http://localhost:3000/user`,userInfo,{
+          const response=await axios.post(`https://boighorserver.vercel.app/user`,userInfo,{
               headers:{
                   Authorization:`Bearer ${token}`
               }
@@ -82,7 +82,7 @@ const {
               role:'user',
               status:'active'
            } 
-           const response=await axios.post(`http://localhost:3000/user`,userInfo,{
+           const response=await axios.post(`https://boighorserver.vercel.app/user`,userInfo,{
               headers:{
                   Authorization:`Bearer ${token}`
               }

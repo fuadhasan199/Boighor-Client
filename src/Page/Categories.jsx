@@ -9,15 +9,17 @@ const Categories = () => {
     const { cart, addToCart } = useContext(CartContext)
     const { user } = useContext(AuthContext)
 
-    const [books, setBooks] = useState([])
+    const [books, setBooks] = useState([]) 
+    const [loading,setLoading]=useState(true)
     const [filteredBooks, setFilteredBooks] = useState([])
     const [activeCategory, setActiveCategory] = useState("সব")
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/books`)
+        axios.get(`https://boighorserver.vercel.app/books`)
             .then(res => {
                 setBooks(res.data)
                 setFilteredBooks(res.data)
+                setLoading(false) 
             })
     }, [])
 
@@ -31,7 +33,15 @@ const Categories = () => {
         { name: 'সেলফ-হেল্প', value: 'Self-Help' },
         { name: 'ইতিহাস', value: 'History' }
     ];
-
+ if(loading){
+       return(
+        <div className="flex justify-center items-center min-h-screen">
+         
+         <span className="loading loading-dots loading-xl"></span>
+            <span className="loading loading-dots loading-xl"></span>
+        </div>
+       )
+ }
     const handleFilter = (catName, catValue) => {
         setActiveCategory(catName)
         if (catValue === 'all') {

@@ -31,7 +31,7 @@ const handleDelete = async (id) => {
                     
                     const token = await user?.getIdToken();
 
-                    const response = await axios.delete(`http://localhost:3000/cart/${id}`, {
+                    const response = await axios.delete(`https://boighorserver.vercel.app/cart/${id}`, {
                         headers: {
                             authorization: `Bearer ${token}` 
                         }

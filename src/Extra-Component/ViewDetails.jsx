@@ -12,7 +12,7 @@ const ViewDetails = () => {
 
  useEffect(() => {
  
-  axios.get(`http://localhost:3000/books/${id}`)
+  axios.get(`https://boighorserver.vercel.app/books/${id}`)
   .then(res=>{  
      setBooks(res.data) 
       setLoading(false)

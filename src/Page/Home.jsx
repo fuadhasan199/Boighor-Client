@@ -15,7 +15,7 @@ const Home = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/books')
+    axios.get('https://boighorserver.vercel.app/books')
       .then(res => setBooks(res.data));
   }, []);
 

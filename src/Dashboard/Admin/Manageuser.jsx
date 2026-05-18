@@ -15,7 +15,7 @@ useEffect(() => {
                 try {
                     const token = await user.getIdToken();
                     
-                    const res = await axios.get(`http://localhost:3000/user?email=${user.email}`, {
+                    const res = await axios.get(`https://boighorserver.vercel.app/user?email=${user.email}`, {
                         headers: { authorization: `Bearer ${token}` }
                     });
                     setUsers(res.data);
@@ -33,7 +33,7 @@ useEffect(() => {
  const handleSuspend=async(id,currentStatus)=>{ 
     const newStatus=currentStatus==='active'?'suspended':"active" 
     const token = await user.getIdToken();
-    axios.patch(`http://localhost:3000/user/${id}`, { status: newStatus }, {
+    axios.patch(`https://boighorserver.vercel.app/user/${id}`, { status: newStatus }, {
             headers: { authorization: `Bearer ${token}` }
         })
     .then(()=>{

@@ -24,7 +24,7 @@ const onSubmit = async (data) => {
         const token = await result.user.getIdToken();
 
        
-        const res = await axios.get(`http://localhost:3000/user?email=${data.email}`, {
+        const res = await axios.get(`https://boighorserver.vercel.app/user?email=${data.email}`, {
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -52,7 +52,7 @@ const onSubmit = async (data) => {
     const token = await user.getIdToken()
 
     
-    const res = await axios.get(`http://localhost:3000/user`, {
+    const res = await axios.get(`https://boighorserver.vercel.app/user`, {
       headers: {
         Authorization: `Bearer ${token}` 
       }
@@ -75,7 +75,7 @@ const onSubmit = async (data) => {
     };
 
     
-    await axios.post(`http://localhost:3000/user`, userInfo, {
+    await axios.post(`https://boighorserver.vercel.app/user`, userInfo, {
       headers: {
         Authorization: `Bearer ${token}`
       }

@@ -15,7 +15,7 @@ useEffect(() => {
                     const token = await user.getIdToken();
 
                     
-                    const res = await axios.get(`http://localhost:3000/orders?email=${user.email}`, {
+                    const res = await axios.get(`https://boighorserver.vercel.app/orders?email=${user.email}`, {
                         headers: {
                             authorization: `Bearer ${token}`
                         }

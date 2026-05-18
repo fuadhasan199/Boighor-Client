@@ -14,7 +14,7 @@ useEffect(() => {
     const fetchCart = async () => {
         if (user?.email) {
             const token = await user.getIdToken();
-            axios.get(`http://localhost:3000/cart?email=${user.email}`, {
+            axios.get(`https://boighorserver.vercel.app/cart?email=${user.email}`, {
                 headers: { authorization: `Bearer ${token}` }
             })
             .then(res => setCart(res.data))
@@ -24,7 +24,7 @@ useEffect(() => {
         }
     };
     fetchCart();
-}, [user?.email]);
+}, [user]);
 
    
     const removeFromCart = (id) => {
@@ -55,7 +55,7 @@ useEffect(() => {
         };
 
         try {
-            const res = await axios.post('http://localhost:3000/cart', item);
+            const res = await axios.post('https://boighorserver.vercel.app/cart', item);
             
             if (res.data.insertedId) {
                 

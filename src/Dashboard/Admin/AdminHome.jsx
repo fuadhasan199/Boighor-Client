@@ -24,9 +24,9 @@ useEffect(() => {
 
             const [booksRes, usersRes] = await Promise.all([
 
-               axios.get('http://localhost:3000/books', config),
+               axios.get('https://boighorserver.vercel.app/books', config),
 
-               axios.get(`http://localhost:3000/user?email=${user.email}`, config)
+               axios.get(`https://boighorserver.vercel.app/user?email=${user.email}`, config)
 
             ]);
 

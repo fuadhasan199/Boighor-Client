@@ -16,7 +16,7 @@ const UserHome = () => {
         if (user?.email) {
             try {
                 const token = await user.getIdToken()
-                const res = await axios.get(`http://localhost:3000/user-stats?email=${user.email}`, {
+                const res = await axios.get(`https://boighorserver.vercel.app/user-stats?email=${user.email}`, {
                     headers: {
                         authorization: `Bearer ${token}`
                     }

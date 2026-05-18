@@ -36,11 +36,12 @@ const {user}=useContext(AuthContext)
                 stock,
                 image,
                 shortDescription,
-                description
+                description,
+                email:user.email
             };
 
           
-            const res = await axios.post('http://localhost:3000/books', newBook, {
+            const res = await axios.post('https://boighorserver.vercel.app/books', newBook, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }

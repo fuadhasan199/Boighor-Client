@@ -11,7 +11,7 @@ import { FaAddressBook } from 'react-icons/fa6';
 const Dashboard = () => { 
 const {user}=useContext(AuthContext) 
 const [isAdmin,setIsAdmin]=useState(null) 
-const [loading,setLoading]=useState(true)
+const [loading,setloading]=useState(true)
 
 useEffect(() => {
 
@@ -24,7 +24,7 @@ useEffect(() => {
             const token = await user.getIdToken();
 
             const res = await axios.get(
-               `http://localhost:3000/users/admin/${user.email}`,
+               `https://boighorserver.vercel.app/users/admin/${user.email}`,
                {
                   headers:{
                      authorization:`Bearer ${token}`
@@ -43,7 +43,7 @@ useEffect(() => {
 
          }
          finally{
-            setLoading(false);
+            setloading(false);
          }
       }
    }

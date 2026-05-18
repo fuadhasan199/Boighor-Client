@@ -20,7 +20,7 @@ const Success = () => {
     if (session_id && !isRequestSent.current) {
       isRequestSent.current = true; 
 
-      axios.get(`http://localhost:3000/verify-payment?session_id=${session_id}`)
+      axios.get(`https://boighorserver.vercel.app/verify-payment?session_id=${session_id}`)
         .then(res => {
           if (res.data.success) {
             setCart([]);

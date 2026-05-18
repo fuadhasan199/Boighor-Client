@@ -47,7 +47,7 @@ const CheckOut = () => {
         if (paymentMethod === 'cod') {
 
             const res = await axios.post(
-                'http://localhost:3000/cash-on-delivery',
+                'https://boighorserver.vercel.app/cash-on-delivery',
                 orderData
             );
  
@@ -72,7 +72,7 @@ const CheckOut = () => {
         else {
 
             const res = await axios.post(
-                'http://localhost:3000/create-checkout-session',
+                'https://boighorserver.vercel.app/create-checkout-session',
                 orderData
             );
             window.location.replace(res.data.url); 

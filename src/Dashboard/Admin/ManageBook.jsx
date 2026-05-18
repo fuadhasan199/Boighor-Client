@@ -10,7 +10,7 @@ const ManageBook = () => {
 
     const navigate = useNavigate();
     const loadBooks = () => {
-        axios.get(`http://localhost:3000/books`)
+        axios.get(`https://boighorserver.vercel.app/books`)
             .then(res => setDatas(res.data))
             .catch(error => console.log(error.message))
     }
@@ -30,7 +30,7 @@ const ManageBook = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/books/${id}`)
+                axios.delete(`https://boighorserver.vercel.app/books/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire("Deleted!", "The book has been deleted.", "success");
@@ -59,7 +59,7 @@ const ManageBook = () => {
         };
 
         try {
-            const res = await axios.patch(`http://localhost:3000/books/${selectedBook._id}`, updatedBook);
+            const res = await axios.patch(`https://boighorserver.vercel.app/books/${selectedBook._id}`, updatedBook);
             if (res.data.modifiedCount > 0) {
                 Swal.fire("Success!", "Book updated successfully", "success");
                 document.getElementById('edit_modal').close();
