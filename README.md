@@ -1,16 +1,49 @@
-# React + Vite
+# Boighor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Boighor is a full-stack, role-based online bookstore platform designed for seamless book browsing, cart management, and secure purchasing. The application features distinct interfaces and functionalities for both general Users and Admins.
 
-Currently, two official plugins are available:
+## Live Links
+- **Client Live Site:** https://boighor-seven.vercel.app - **Server API URL:** https://boighorserver.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Core Features
 
-## React Compiler
+### For Users:
+- **Authentication:** Secure registration and login powered by Firebase.
+- **Cart Management:** Add desired books to the cart with duplicate prevention.
+- **Flexible Checkout:** Purchase books via either Cash on Delivery (COD) or online payment using Stripe.
+- **User Dashboard:** View and manage personal cart items, order history, and purchasing statistics.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### For Admins:
+- **Book Management:** Full CRUD operations (Add new books, update book details, and delete books from the store).
+- **User Management:** Monitor registered users and suspend accounts .
+- **Admin Dashboard:** Access overall store statistics and management panels.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend:
+- React
+- React-Router 
+- Firebase (Client-side Auth)
+- Axios
+- React Icons
+- SweetAlert2
+- Tailwind CSS & DaisyUI
+
+### Backend & Database:
+- Node.js
+- Express.js
+- Firebase Admin SDK (Token verification and server-side protection)
+- MongoDB Atlas
+- Stripe API 
+
+### 🔑 Demo Admin Credentials (For Testing)
+To test the Admin Dashboard features, you can log in using this pre-configured admin account:
+- **Email:** admin@gmail.com
+- **Password:** Admin102030+
+
+## Deployment
+- **Frontend:** Deployed on Vercel
+- **Backend:** Deployed on Vercel (Optimized Serverless Architecture) 
+
+## Server-Side-Repo: https://github.com/fuadhasan199/Boighor-Server.git 
+
